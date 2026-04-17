@@ -357,14 +357,14 @@ python3 -c "import secrets; print(secrets.token_urlsafe(32))"
 For example:
 
 ```text
-cTFYwz7fh3_iqZqDEOXAdT6F-movvLX4kCoNEzUcXX0
+cTFYwz7fh3_iqZqDEOXAdT6F
 ```
 
 Update `/etc/caddy/Caddyfile`:
 
 ```caddy
 alteryxllmdemo.duckdns.org {
-    @authorized header Authorization "Bearer cTFYwz7fh3_iqZqDEOXAdT6F-movvLX4kCoNEzUcXX0"
+    @authorized header Authorization "Bearer cTFYwz7fh3_iqZqDEOXAdT6F"
 
     handle @authorized {
         reverse_proxy 127.0.0.1:11434 {
@@ -398,7 +398,7 @@ Test **with** auth:
 
 ```bash
 curl -s https://alteryxllmdemo.duckdns.org/v1/models \
-  -H "Authorization: Bearer cTFYwz7fh3_iqZqDEOXAdT6F-movvLX4kCoNEzUcXX0" | jq .
+  -H "Authorization: Bearer cTFYwz7fh3_iqZqDEOXAdT6F" | jq .
 ```
 
 Expected result: valid JSON model list.
@@ -408,7 +408,7 @@ Test a completion:
 ```bash
 curl -s https://alteryxllmdemo.duckdns.org/v1/chat/completions \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer cTFYwz7fh3_iqZqDEOXAdT6F-movvLX4kCoNEzUcXX0" \
+  -H "Authorization: Bearer cTFYwz7fh3_iqZqDEOXAdT6F" \
   -d '{
     "model": "ollama/llama3:8b",
     "messages": [
@@ -622,45 +622,4 @@ End User
 → Designer Desktop
 → Prompt Tool output
 ```
-
----
-
-## File structure suggestion for GitHub
-
-If you want to publish this cleanly, use something like:
-
-```text
-.
-├── README.md
-├── docs/
-│   ├── architecture.png
-│   ├── troubleshooting.md
-│   └── hardening-notes.md
-└── examples/
-    ├── Caddyfile
-    └── curl-tests.md
-```
-
----
-
-## Suggested repo title
-
-**byo-llm-alteryx-genai-reference**
-
----
-
-## Suggested README introduction
-
-> This repository documents a working reference implementation for connecting Alteryx Designer Desktop GenAI tools to a customer-hosted, OpenAI-compatible LLM endpoint using GCP, Ubuntu, Caddy, and Ollama. It is intended as a technical walkthrough and architecture reference rather than a production-ready product build.
-
----
-
-## References
-
-- Alteryx GenAI overview: https://help.alteryx.com/current/en/designer/tools/genai.html
-- Alteryx Prompt Tool: https://help.alteryx.com/current/en/designer/tools/genai/prompt-tool.html
-- Alteryx Create LLM Connections: https://help.alteryx.com/current/en/designer/tools/genai/create-llm-connections.html
-- Ollama OpenAI compatibility: https://docs.ollama.com/openai
-- Ollama FAQ: https://docs.ollama.com/faq
-- Caddy reverse proxy docs: https://caddyserver.com/docs/caddyfile/directives/reverse_proxy
 
